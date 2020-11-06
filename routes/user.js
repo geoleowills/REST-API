@@ -5,11 +5,12 @@ const bcrypt = require("bcrypt");
 const { asyncHandler } = require("../middleware/async-handler");
 const { authenticateUser } = require("../middleware/authenticate-user");
 
-// Construct a router instance
+// Construct a router instance.
 const router = express.Router();
-
+// Imports the models.
 const { User, Course } = require("../models");
 
+// Returns the user that is currently authenticated.
 router.get(
   "/",
   authenticateUser,
@@ -24,6 +25,7 @@ router.get(
   })
 );
 
+// Creates a user, setsa the location header to '/' and returns no content.
 router.post(
   "/",
   asyncHandler(async (req, res) => {

@@ -7,9 +7,11 @@ const { authenticateUser } = require("../middleware/authenticate-user");
 
 // Construct a router instance
 const router = express.Router();
-
+// Imports the models
 const { User, Course } = require("../models");
 
+// Returns a list of all courses and shows details for the user that
+// owns each course.
 router.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -28,6 +30,8 @@ router.get(
   })
 );
 
+// Returns the course for the provided course ID, shows
+// details for the user that owns the course.
 router.get(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -53,6 +57,7 @@ router.get(
   })
 );
 
+// Creates a course, then sets the location header to the URI for the course and returns no content.
 router.post(
   "/",
   authenticateUser,
@@ -63,6 +68,9 @@ router.post(
   })
 );
 
+// Updates a course only if the current authenticated user is the owner
+// of the course. Retures a 403 status code if user attempts to update a
+// course that they do not own. If update is successful, no content is returned.
 router.put(
   "/:id",
   authenticateUser,
@@ -85,6 +93,8 @@ router.put(
   })
 );
 
+// Deletes a course only if the currently authenticated user the the owner
+// of the course. Returns not content.
 router.delete(
   "/:id",
   authenticateUser,
