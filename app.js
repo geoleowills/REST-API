@@ -58,7 +58,6 @@ app.use((err, req, res, next) => {
   if (enableGlobalErrorLogging) {
     console.error(`Global error handler: ${JSON.stringify(err.stack)}`);
   }
-  console.log(err);
   if (
     err.name === "SequelizeValidationError" ||
     err.name === "SequelizeUniqueConstraintError"
