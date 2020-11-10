@@ -58,18 +58,19 @@ app.use((err, req, res, next) => {
   if (enableGlobalErrorLogging) {
     console.error(`Global error handler: ${JSON.stringify(err.stack)}`);
   }
-
+  console.log(err);
   if (
     err.name === "SequelizeValidationError" ||
     err.name === "SequelizeUniqueConstraintError"
   ) {
     const errors = err.errors.map((err) => err.message);
     res.status(400).json({ errors });
+  } else {
+    res.status(err.status || 500).json({
+      message: err.message,
+      error: {},
+    });
   }
-  res.status(err.status || 500).json({
-    message: err.message,
-    error: {},
-  });
 });
 
 // set our port
